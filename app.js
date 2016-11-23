@@ -11,7 +11,10 @@ app.set("view engine", "ejs");
 var campgrounds = [
   {name: "Salmon Creeek", image: "http://campinghatley.com/wp-content/uploads/2013/12/camping-.jpg"},
   {name: "Granite Hill", image: "http://haileyidaho.com/wp-content/uploads/2015/01/Stanley-lake-camping-Credit-Carol-Waller-2011.jpg"},
-  {name: "West Coast", image:"http://www.wildnatureimages.com/images%203/060731-372..jpg"}
+  {name: "West Coast", image:"http://www.wildnatureimages.com/images%203/060731-372..jpg"},
+  {name: "New Yorkies", image: "http://campinghatley.com/wp-content/uploads/2013/12/camping-.jpg"},
+  {name: "Abingdon", image: "http://haileyidaho.com/wp-content/uploads/2015/01/Stanley-lake-camping-Credit-Carol-Waller-2011.jpg"},
+  {name: "Polymer", image:"http://www.wildnatureimages.com/images%203/060731-372..jpg"}
 ];
 
 
