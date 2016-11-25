@@ -23,6 +23,21 @@ var campgroundSchema = new mongoose.Schema({
 var Campground = mongoose.model("Campground", campgroundSchema);
 
 
+//INSERT NEW DATA WITH DESCRIPTION FIELD
+/*Campground.create({
+  name:"Granite Hill",
+  image:"https://www.nhstateparks.org/uploads/images/Dry-River_Campground_02.jpg",
+  description:"this is a huge granite hill no bathroom, no water, beautiful granite"
+}, function(err, campground){
+  if(err){
+    console.log(err);
+  }else{
+    console.log("Newly Created Campground");
+    console.log(campground);
+  }
+})*/
+
+
 app.get("/", function(req, res){
   res.render("landing");
 });
@@ -33,7 +48,7 @@ app.get("/campgrounds", function(req, res){
     if(err){
       console.log(err);
     }else{
-        res.render("campgrounds", {campdata: allCampgrounds})
+        res.render("index", {campdata: allCampgrounds})
     }
   });
 
@@ -62,8 +77,21 @@ app.get("/campgrounds/new", function(req, res){
     res.render("new");
 });
 
+
+
+//Show PAGE
 app.get("/campgrounds/:id", function(req, res){
-  res.send("THIS WILL BE THE SHOW PAGE");
+  //find the campground with provided id
+  //render show template with that campground
+  var id = req.params.id;
+
+  Campground.findById(id, function(err, foundCampground){
+    if(err){
+      console.log(err);
+    }else{
+      res.render("show", {campground: foundCampground});
+    }
+  });
 })
 
 
