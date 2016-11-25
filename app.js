@@ -1,21 +1,26 @@
 var express      = require("express"),
     app          = express(),
-    bodyParser   = require("body-parser");
+    bodyParser   = require("body-parser"),
+    mongoose     = require("mongoose");
 
 
 
-
+mongoose.connect("mongodb://localhost/yelpcamp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-var campgrounds = [
-  {name: "Salmon Creeek", image: "http://campinghatley.com/wp-content/uploads/2013/12/camping-.jpg"},
-  {name: "Granite Hill", image: "http://haileyidaho.com/wp-content/uploads/2015/01/Stanley-lake-camping-Credit-Carol-Waller-2011.jpg"},
-  {name: "West Coast", image:"http://www.wildnatureimages.com/images%203/060731-372..jpg"},
-  {name: "New Yorkies", image: "http://campinghatley.com/wp-content/uploads/2013/12/camping-.jpg"},
-  {name: "Abingdon", image: "http://haileyidaho.com/wp-content/uploads/2015/01/Stanley-lake-camping-Credit-Carol-Waller-2011.jpg"},
-  {name: "Polymer", image:"http://www.wildnatureimages.com/images%203/060731-372..jpg"}
-];
+
+
+//SCHEMA SETUP
+var campgroundSchema = new mongoose.Schema({
+  name: String,
+  image: String,
+  description: String
+});
+
+
+//MODEL SCHEMA
+var Campground = mongoose.model("Campground", campgroundSchema);
 
 
 app.get("/", function(req, res){
@@ -23,13 +28,20 @@ app.get("/", function(req, res){
 });
 
 app.get("/campgrounds", function(req, res){
+  //GET all campgrouds from DB
+  Campground.find({}, function(err, allCampgrounds){
+    if(err){
+      console.log(err);
+    }else{
+        res.render("campgrounds", {campdata: allCampgrounds})
+    }
+  });
 
-  res.render("campgrounds", {campdata: campgrounds});
 });
 
 app.post("/campgrounds", function(req, res){
 
-  //get data from form and add to campgrounds array
+  //get data from form and add to campgrounds database
   //Redirect back to the campround page
   var name  = req.body.name,
       image = req.body.image,
@@ -37,15 +49,22 @@ app.post("/campgrounds", function(req, res){
         name: name,
         image: image
       };
-  campgrounds.push(newCampground);
-
-
-  res.redirect("/campgrounds");
+Campground.create(newCampground, function(err, newlyCreated){
+  if(err){
+    console.log(err);
+  }else{
+    res.redirect("/campgrounds");
+  }
+});
 });
 
 app.get("/campgrounds/new", function(req, res){
     res.render("new");
 });
+
+app.get("/campgrounds/:id", function(req, res){
+  res.send("THIS WILL BE THE SHOW PAGE");
+})
 
 
 app.listen(3000, function(){
