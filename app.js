@@ -1,6 +1,7 @@
 var express      = require("express"),
     app          = express(),
     bodyParser   = require("body-parser"),
+    Campground = require("./models/campground"),
     mongoose     = require("mongoose");
 
 
@@ -12,15 +13,10 @@ app.set("view engine", "ejs");
 
 
 //SCHEMA SETUP
-var campgroundSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  description: String
-});
 
 
 //MODEL SCHEMA
-var Campground = mongoose.model("Campground", campgroundSchema);
+
 
 
 //INSERT NEW DATA WITH DESCRIPTION FIELD
