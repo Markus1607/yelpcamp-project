@@ -3,6 +3,10 @@ var express      = require("express"),
     bodyParser   = require("body-parser"),
     Campground = require("./models/campground"),
     mongoose     = require("mongoose"),
+    passport     = require("passport"),
+    Comment     = require("./models/comment"),
+    LocalStrategy = require("passport-local"),
+    User         = require("./models/user"),
     seedDB    = require("./seeds");
 
 
@@ -11,6 +15,22 @@ mongoose.connect("mongodb://localhost/yelpcamp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 seedDB();
+
+
+
+//PASSPORT CONFIGURATION
+app.use(require("express-session")({
+  secret:"Mark's secret",
+  resave: false,
+  saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 
 
@@ -112,7 +132,30 @@ app.get("/campgrounds/:id/comments/new", function(req, res){
 
 app.post("/campgrounds/:id/comments", function(req, res){
   //lookup camoground inside id
+  Campground.findById(req.params.id, function(err, campground){
+    if(err){
+      console.log(err);
+      res.redirect("./campgrounds");
+    }else{
+      Comment.create(req.body.comment, function(err, comment){
+        if(err){
+          console.log(err);
+        }else{
+          campground.comments.push(comment);
+          campground.save();
+          res.redirect("/campgrounds/" + campground._id);
+        }
+      })
+    }
+  })
 })
+
+
+//AUTH ROUTES
+
+
+
+
 
 
 app.listen(3000, function(){
