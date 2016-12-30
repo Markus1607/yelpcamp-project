@@ -4,11 +4,11 @@
   <%= campground.name %>
 </h1>
 
-<img src="<%= campground.image %>" >
+<img style="width: 400px; height: 400px;" src="<%= campground.image %>" >
 
 <p> <%= campground.description %> </p>
 
-<% campgrounds.comments.forEach(function(comment){ %>
+<% campground.comments.forEach(function(comment){ %>
     <p>
       <strong><%= comment.author %>   </strong>  - <%= comment.text %>
     </p>

@@ -37,15 +37,15 @@ function seedDB(){
               console.log(err)
             }else{
               console.log("Added all Campgrounds");
-              Campground.create({
+              Comment.create({
                 text:"this place is great but i wish it had internet",
                 author:"Hommer"
               }, function(err, comment){
                 if(err){
                   console.log(err)
                 }else{
-                  Campground.comments.push(comment);
-                  Campground.save();
+                  data.comments.push(comment);
+                  data.save();
                   console.log("created new comment");
                 }
               })
