@@ -6,6 +6,10 @@
 
 <img style="width: 400px; height: 400px;" src="<%= campground.image %>" >
 
+<a href="/campgrounds/<%=campground._id%>/comments/new" class="btn btn-success"> Add New Comment</a>
+
+
+
 <p> <%= campground.description %> </p>
 
 <% campground.comments.forEach(function(comment){ %>
@@ -14,6 +18,8 @@
     </p>
 
 <% }) %>
+
+
 
 
 <% include ../partials/footer %>
