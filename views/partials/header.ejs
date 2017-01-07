@@ -49,9 +49,14 @@
         </div>
         <div class="collapse navbar-collapse">
           <div class="nav navbar-nav navbar-right">
+            <% if(!currentUser){ %>
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Sign Up</a></li>
+           <% } else {%>
+             <li><a href="#">Welcome <%= currentUser.username.charAt(0).toUpperCase() + currentUser.username.slice(1).toLowerCase();
+ %></a><li>
             <li><a href="/logout">Logout</a></li>
+            <% } %>
           </div>
         </div>
       </div>
