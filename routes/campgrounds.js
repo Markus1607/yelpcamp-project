@@ -17,7 +17,7 @@ router.get("/", function(req, res){
 
 });
 
-router.post("/", function(req, res){
+router.post("/", isLoggedIn,  function(req, res){
 
   //get data from form and add to campgrounds database
   //Redirect back to the campround page
@@ -36,7 +36,7 @@ Campground.create(newCampground, function(err, newlyCreated){
 });
 });
 
-router.get("/new", function(req, res){
+router.get("/new", isLoggedIn, function(req, res){
     res.render("campgrounds/new");
 });
 
@@ -57,6 +57,15 @@ router.get("/:id", function(req, res){
     }
   });
 })
+
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect("/login");
+
+}
 
 
 module.exports = router;
