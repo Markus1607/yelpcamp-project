@@ -29,30 +29,30 @@ function seedDB(){
   Campground.remove({}, function(err){
     if(err){
       console.log(err)
-    }else{
-      console.log("All campgrounds removed");
-        data.forEach(function(seed){
-          Campground.create(seed, function(err, data){
-            if(err){
-              console.log(err)
-            }else{
-              console.log("Added all Campgrounds");
-              Comment.create({
-                text:"this place is great but i wish it had internet",
-                author:"Hommer"
-              }, function(err, comment){
-                if(err){
-                  console.log(err)
-                }else{
-                  data.comments.push(comment);
-                  data.save();
-                  console.log("created new comment");
-                }
-              })
-            }
-          })
-        });
-      }
+    }
+    console.log("All campgrounds removed");
+      data.forEach(function(seed){
+        Campground.create(seed, function(err, data){
+          if(err){
+            console.log(err)
+          }else{
+            console.log("Added all Campgrounds");
+            Comment.create({
+              text:"this place is great but i wish it had internet",
+              author:"Hommer"
+            }, function(err, comment){
+              if(err){
+                console.log(err)
+              }else{
+                data.comments.push(comment);
+                data.save();
+                console.log("created new comment");
+              }
+            })
+          }
+        })
+     });
+
     })
 
 }

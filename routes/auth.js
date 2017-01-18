@@ -60,6 +60,8 @@ router.get("/logout", function(req, res){
 })
 
 
+
+//MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next();

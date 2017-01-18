@@ -6,7 +6,7 @@ var Comment = require("../models/comment");
 
 
 
-
+// Comments NEW
 router.get("/new", isLoggedIn, function(req, res){
   Campground.findById(req.params.id, function(err, campground){
     if(err){
@@ -18,6 +18,8 @@ router.get("/new", isLoggedIn, function(req, res){
 
 })
 
+
+//COMMENTS CREATE
 router.post("/", isLoggedIn, function(req, res){
   //lookup camoground inside id
   Campground.findById(req.params.id, function(err, campground){
@@ -29,8 +31,14 @@ router.post("/", isLoggedIn, function(req, res){
         if(err){
           console.log(err);
         }else{
+          //add username and id to comment
+          comment.author.id = req.user._id;
+          comment.author.username = req.user.username;
+          //save comment
+          comment.save();
           campground.comments.push(comment);
           campground.save();
+          console.log(comment);
           res.redirect("/campgrounds/" + campground._id);
         }
       })
@@ -38,7 +46,7 @@ router.post("/", isLoggedIn, function(req, res){
   })
 });
 
-
+//MIDDLEWARE
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next();

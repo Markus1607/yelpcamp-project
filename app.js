@@ -10,7 +10,7 @@ var express      = require("express"),
     seedDB    = require("./seeds");
 
 
-
+//Requiring routes
 var commentsRoute = require("./routes/comments"),
     campgroundRoute = require("./routes/campgrounds"),
     authRoute = require("./routes/auth");
@@ -20,7 +20,7 @@ var commentsRoute = require("./routes/comments"),
 mongoose.connect("mongodb://localhost/yelpcamp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
-seedDB();
+//seedDB();
 
 
 
