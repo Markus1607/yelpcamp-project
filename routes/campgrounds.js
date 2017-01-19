@@ -66,6 +66,42 @@ router.get("/:id", function(req, res){
 })
 
 
+//EDIT route
+router.get("/:id/edit", function(req, res){
+  var id = req.params.id;
+  Campground.findById(id, function(err, foundCampground){
+    if(err){
+      res.redirect("/campgrounds");
+    }else{
+      res.render("campgrounds/edit", {campground: foundCampground})
+    }
+  })
+
+})
+
+
+//UPDATE route
+router.put("/:id", function(req, res){
+
+  var id = req.params.id,
+      campground = req.body.campground;
+
+  //find and update the correct campground
+  Campground.findByIdAndUpdate(id, campground, function(err, updatedCampground){
+
+    if(err){
+      res.redirect("/campgrounds");
+    }else{
+      res.redirect("/campgrounds/" + id);
+    }
+
+  })
+
+  //redirect to show page
+
+
+})
+
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next();
