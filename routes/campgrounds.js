@@ -23,9 +23,16 @@ router.post("/", isLoggedIn,  function(req, res){
   //Redirect back to the campround page
   var name  = req.body.name,
       image = req.body.image,
+      description = req.body.description,
       newCampground = {
         name: name,
-        image: image
+        image: image,
+        description: description,
+        author: author
+      },
+      author = {
+        id: req.user._id,
+        username:req.user.username
       };
 Campground.create(newCampground, function(err, newlyCreated){
   if(err){
