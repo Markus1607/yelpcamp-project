@@ -24,16 +24,17 @@ router.post("/", isLoggedIn,  function(req, res){
   var name  = req.body.name,
       image = req.body.image,
       description = req.body.description,
+      author = {
+        id: req.user._id,
+        username:req.user.username
+      },
       newCampground = {
         name: name,
         image: image,
         description: description,
         author: author
-      },
-      author = {
-        id: req.user._id,
-        username:req.user.username
       };
+
 Campground.create(newCampground, function(err, newlyCreated){
   if(err){
     console.log(err);
@@ -66,21 +67,33 @@ router.get("/:id", function(req, res){
 })
 
 
-//EDIT route
+//EDIT ROUTE
 router.get("/:id/edit", function(req, res){
   var id = req.params.id;
-  Campground.findById(id, function(err, foundCampground){
-    if(err){
-      res.redirect("/campgrounds");
-    }else{
-      res.render("campgrounds/edit", {campground: foundCampground})
-    }
-  })
+  //Is User logged in
+  if(req.isAuthenticated()){
+    Campground.findById(id, function(err, foundCampground){
+      if(err){
+        res.redirect("/campgrounds");
+      }else{
+        console.log(req.user._id);
+        console.log(foundCampground);
+        // if(foundCampground.author.id.equals(req.user._id)){
+        //   res.render("campgrounds/edit", {campground: foundCampground});
+        // }
+      }
+    })
+
+  }else{
+    console.log("You need to be logged In to do that");
+    res.send("You need to be logged in");
+  }
+
 
 })
 
 
-//UPDATE route
+//UPDATE ROUTE
 router.put("/:id", function(req, res){
 
   var id = req.params.id,
@@ -96,10 +109,18 @@ router.put("/:id", function(req, res){
     }
 
   })
+})
 
-  //redirect to show page
 
-
+//DESTROY CAMPGROUND ROUTE
+router.delete("/:id", function(req, res){
+  Campground.findByIdAndRemove(req.params.id, function(err){
+    if(err){
+      res.redirect("/campgrounds");
+    }else{
+      res.redirect("/campgrounds");
+    }
+  })
 })
 
 function isLoggedIn(req, res, next){
