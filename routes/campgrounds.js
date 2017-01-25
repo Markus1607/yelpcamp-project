@@ -70,17 +70,16 @@ router.get("/:id", function(req, res){
 //EDIT ROUTE
 router.get("/:id/edit", function(req, res){
   var id = req.params.id;
-  //Is User logged in
+  //Is User logged in #authentication
   if(req.isAuthenticated()){
     Campground.findById(id, function(err, foundCampground){
       if(err){
         res.redirect("/campgrounds");
       }else{
-        console.log(req.user._id);
-        console.log(foundCampground);
-        // if(foundCampground.author.id.equals(req.user._id)){
-        //   res.render("campgrounds/edit", {campground: foundCampground});
-        // }
+        //check if the user created the campground
+        if(foundCampground.author.id.equals(req.user._id)){
+          res.render("campgrounds/edit", {campground: foundCampground});
+        }
       }
     })
 
