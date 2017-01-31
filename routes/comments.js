@@ -15,7 +15,6 @@ router.get("/new", isLoggedIn, function(req, res){
       res.render("comments/new", {campground: campground})
     }
   })
-
 })
 
 
@@ -58,6 +57,20 @@ router.get("/:comment_id/edit", function(req, res){
       }
       else{
         res.render("comments/edit", {campground_id: req.params.id, comment: foundComment});
+      }
+    })
+})
+
+
+//UPDATE ROUTE
+router.put("/:comment_id", function(req, res){
+
+    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
+      if(err){
+        res.redirect("back");
+      }
+      else{
+        res.redirect("/campgrounds/"+ req.params.id);
       }
     })
 })
