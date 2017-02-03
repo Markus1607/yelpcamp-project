@@ -6,7 +6,7 @@ var express      = require("express"),
     passport     = require("passport"),
     Comment     = require("./models/comment"),
     LocalStrategy = require("passport-local"),
-    methodOverride = require("method-override");
+    methodOverride = require("method-override"),
     User         = require("./models/user"),
     seedDB    = require("./seeds");
 
