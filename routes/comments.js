@@ -50,8 +50,8 @@ router.post("/", isLoggedIn, function(req, res){
 
 //EDIT ROUTE
 
-router.get("/:comment_id/edit", checkCommentOwnership, function(req, res){
-    Comment.findById(req.params.comment_id, function(err, foundComment){
+router.get("/:comments_id/edit", checkCommentOwnership, function(req, res){
+    Comment.findById(req.params.comments_id, function(err, foundComment){
       if(err){
         res.redirect("back");
       }
@@ -63,9 +63,9 @@ router.get("/:comment_id/edit", checkCommentOwnership, function(req, res){
 
 
 //UPDATE ROUTE
-router.put("/:comment_id", checkCommentOwnership, function(req, res){
+router.put("/:comments_id", checkCommentOwnership, function(req, res){
 
-    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, function(err, updatedComment){
+    Comment.findByIdAndUpdate(req.params.comments_id, req.body.comment, function(err, updatedComment){
       if(err){
         res.redirect("back");
       }
