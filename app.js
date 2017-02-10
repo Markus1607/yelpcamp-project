@@ -5,6 +5,7 @@ var express      = require("express"),
     mongoose     = require("mongoose"),
     passport     = require("passport"),
     Comment     = require("./models/comment"),
+    flash      = require("connect-flash"),
     LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
     User         = require("./models/user"),
@@ -21,6 +22,7 @@ var commentsRoute = require("./routes/comments"),
 mongoose.connect("mongodb://localhost/yelpcamp");
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
+app.use(flash());
 app.use(methodOverride("_method"));
 //seedDB();
 
@@ -42,6 +44,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
   res.locals.currentUser = req.user;
+  res.locals.message = req.flash("error");
   next();
 })
 

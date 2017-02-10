@@ -41,6 +41,8 @@ router.post("/register", function(req, res){
 router.get("/login", function(req,res){
   res.render("login");
 })
+
+
 //handling login logic
 router.post("/login", passport.authenticate("local",
     {successRedirect: "/campgrounds",
@@ -56,6 +58,7 @@ router.post("/login", passport.authenticate("local",
 
 router.get("/logout", function(req, res){
   req.logout();
+  req.flash("error", "Logged You out!");
   res.redirect("/campgrounds");
 })
 
