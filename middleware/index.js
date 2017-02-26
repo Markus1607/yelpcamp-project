@@ -15,11 +15,13 @@ middlewareObj.checkCampgroundOwnership = function(req, res, next){
         if(foundCampground.author.id.equals(req.user._id)){
           next();
         }else{
+          res.flash("error", "You dont have persmission to do that!")
           res.redirect("back");
         }
       }
     })
   }else{
+    req.flash("error", "You need to be logged in to do that!")
     res.redirect("back");
   }
 };
