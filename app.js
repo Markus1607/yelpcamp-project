@@ -4,6 +4,7 @@ var express      = require("express"),
     Campground = require("./models/campground"),
     mongoose     = require("mongoose"),
     passport     = require("passport"),
+    path         = require("path"),
     Comment     = require("./models/comment"),
     flash      = require("connect-flash"),
     LocalStrategy = require("passport-local"),
@@ -25,7 +26,7 @@ app.set("view engine", "ejs");
 app.use(flash());
 app.use(methodOverride("_method"));
 //seedDB();
-
+app.use('/', express.static(path.join(__dirname, 'public')))
 
 
 //PASSPORT CONFIGURATION
