@@ -6,7 +6,7 @@
         <div class="col-md-12 text-center">
           <h1 class="new--h1"> Edit <%= campground.name %></h1>
           <div class="form-style">
-            <form action="/campgrounds/<%= campground._id git%>?_method=PUT"  method="POST">
+            <form action="/campgrounds/<%= campground._id%>?_method=PUT"  method="POST">
                 <input class="form-control" type="text" name="campground[name]" placeholder="<%= campground.name %>">
                 <input class="form-control" type="text" name="campground[image]" placeholder="<%= campground.image %>">
                 <input class="form-control" type="text" name="campground[description]" placeholder="<%= campground.description %>">
